@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Hephaestus Dev (LTVMS) — Software Engineering Forge</title>
+  <meta name="description" content="Hephaestus Dev turns complex ideas into high-performance software through solid engineering and smart design. Web development, software development, and software architecture." />
+  <meta property="og:title" content="Hephaestus Dev (LTVMS)" />
+  <meta property="og:description" content="We turn complex ideas into high-performance software through solid engineering and smart design." />
+  <meta property="og:type" content="website" />
+  <meta property="og:image" content="assets/logo.png" />
+  <link rel="icon" type="image/png" href="assets/logo.png" />
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            forge: {
+              bg: '#0b0f19',
+              surface: '#111827',
+              copper: '#f97316',
+              amber: '#f59e0b',
+              chip: '#22d3ee',
+            },
+          },
+          fontFamily: {
+            display: ['"Segoe UI"', 'system-ui', 'sans-serif'],
+          },
+        },
+      },
+    };
+  </script>
+
+  <style>
+    /* ---- Custom bits Tailwind can't do ---- */
+
+    /* Greek-key (meander) divider */
+    .greek-key {
+      height: 14px;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='28' height='14' viewBox='0 0 28 14'%3E%3Cpath d='M0 13h6V5h8v4h-4V7h-2v4h8V3H4v8H0z M14 1h14v2h-6v8h6v2h-8V5h4v2h2V3H14z' fill='%23f97316' fill-opacity='0.35'/%3E%3C/svg%3E");
+      background-repeat: repeat-x;
+    }
+
+    /* Circuit-trace hero backdrop */
+    .circuit-bg {
+      background-image:
+        radial-gradient(circle at 20% 30%, rgba(249,115,22,0.07) 0, transparent 40%),
+        radial-gradient(circle at 80% 70%, rgba(245,158,11,0.05) 0, transparent 40%),
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120' viewBox='0 0 120 120'%3E%3Cg stroke='%23f97316' stroke-opacity='0.06' stroke-width='1.5' fill='none'%3E%3Cpath d='M10 60h30l10-10h20l10 10h30'/%3E%3Cpath d='M60 10v25l10 10v25'/%3E%3Ccircle cx='10' cy='60' r='3'/%3E%3Ccircle cx='110' cy='60' r='3'/%3E%3Ccircle cx='60' cy='10' r='3'/%3E%3C/g%3E%3C/svg%3E");
+    }
+
+    /* Forge glow behind logo */
+    @keyframes forgeGlow {
+      0%, 100% { box-shadow: 0 0 40px 4px rgba(249,115,22,0.25), 0 0 90px 12px rgba(245,158,11,0.10); }
+      50%      { box-shadow: 0 0 60px 10px rgba(249,115,22,0.40), 0 0 120px 20px rgba(245,158,11,0.18); }
+    }
+    .forge-glow { animation: forgeGlow 4s ease-in-out infinite; }
+
+    /* Scroll reveal */
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity .7s ease, transform .7s ease; }
+    .reveal.visible { opacity: 1; transform: none; }
+
+    /* Card hover: greek-key top border sweep */
+    .forge-card { position: relative; overflow: hidden; }
+    .forge-card::before {
+      content: ''; position: absolute; top: 0; left: 0; right: 0; height: 3px;
+      background: linear-gradient(90deg, #f97316, #f59e0b, #f97316);
+      transform: scaleX(0); transform-origin: left; transition: transform .4s ease;
+    }
+    .forge-card:hover::before { transform: scaleX(1); }
+
+    /* Skeleton shimmer */
+    @keyframes shimmer { 0% { background-position: -400px 0; } 100% { background-position: 400px 0; } }
+    .skeleton {
+      background: linear-gradient(90deg, #1f2937 25%, #374151 50%, #1f2937 75%);
+      background-size: 800px 100%;
+      animation: shimmer 1.4s infinite linear;
+    }
+
+    /* Double metallic ring for the emblem */
+    .metal-ring {
+      border: 2px solid rgba(148,163,184,0.5);
+      outline: 6px solid rgba(30,41,59,0.9);
+      outline-offset: 6px;
+    }
+
+    html { -webkit-text-size-adjust: 100%; }
+    body { overflow-x: hidden; }
+  </style>
+</head>
+
+<body class="bg-forge-bg text-slate-300 font-display antialiased">
+
+  <!-- ===================== NAVBAR ===================== -->
+  <header class="fixed inset-x-0 top-0 z-50 border-b border-slate-800/70 bg-forge-bg/80 backdrop-blur-md">
+    <nav class="mx-auto flex max-w-6xl items-center justify-between px-4 py-3 sm:px-6" aria-label="Main navigation">
+      <a href="#top" class="flex items-center gap-3">
+        <span class="flex h-9 w-9 items-center justify-center overflow-hidden rounded-full border border-forge-copper/60 bg-slate-900">
+          <img src="assets/logo.png" alt="Hephaestus Dev logo" class="h-full w-full object-cover"
+               onerror="this.replaceWith(window.hammerSvg('h-5 w-5'))" />
+        </span>
+        <span class="text-sm font-bold uppercase tracking-[0.25em] text-slate-100">Hephaestus <span class="text-forge-copper">Dev</span></span>
+      </a>
+
+      <ul class="hidden items-center gap-7 text-sm md:flex">
+        <li><a href="#services" class="transition hover:text-forge-copper">Services</a></li>
+        <li><a href="#stack" class="transition hover:text-forge-copper">Stack</a></li>
+        <li><a href="#work" class="transition hover:text-forge-copper">Work</a></li>
+        <li><a href="#about" class="transition hover:text-forge-copper">About</a></li>
+        <li>
+          <a href="mailto:ltvms.hephaestus.dev@gmail.com"
+             class="rounded-md bg-forge-copper px-4 py-2 font-semibold text-slate-950 transition hover:bg-forge-amber focus:outline-none focus:ring-2 focus:ring-forge-amber">
+            Get in Touch
+          </a>
+        </li>
+      </ul>
+
+      <button id="menu-btn" aria-label="Toggle menu" aria-expanded="false"
+              class="rounded-md border border-slate-700 p-2 text-slate-300 transition hover:border-forge-copper hover:text-forge-copper md:hidden">
+        <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+          <path stroke-linecap="round" d="M4 6h16M4 12h16M4 18h16" />
+        </svg>
+      </button>
+    </nav>
+
+    <div id="mobile-menu" class="hidden border-t border-slate-800 bg-forge-bg/95 px-6 py-4 md:hidden">
+      <ul class="flex flex-col gap-4 text-sm">
+        <li><a href="#services" class="block transition hover:text-forge-copper">Services</a></li>
+        <li><a href="#stack" class="block transition hover:text-forge-copper">Stack</a></li>
+        <li><a href="#work" class="block transition hover:text-forge-copper">Work</a></li>
+        <li><a href="#about" class="block transition hover:text-forge-copper">About</a></li>
+        <li>
+          <a href="mailto:ltvms.hephaestus.dev@gmail.com" class="inline-block rounded-md bg-forge-copper px-4 py-2 font-semibold text-slate-950">Get in Touch</a>
+        </li>
+      </ul>
+    </div>
+  </header>
+
+  <main id="top">
+
+    <!-- ===================== HERO ===================== -->
+    <section class="circuit-bg relative overflow-hidden pt-28 sm:pt-32">
+      <div class="mx-auto grid max-w-6xl items-center gap-12 px-4 pb-20 sm:px-6 lg:grid-cols-2 lg:pb-28">
+        <div class="reveal">
+          <p class="mb-4 text-xs font-semibold uppercase tracking-[0.35em] text-forge-amber">LTVMS · Software Engineering</p>
+          <h1 class="text-4xl font-extrabold leading-tight tracking-tight text-slate-100 sm:text-5xl">
+            We turn complex ideas into
+            <span class="bg-gradient-to-r from-forge-copper to-forge-amber bg-clip-text text-transparent">high-performance software</span>
+          </h1>
+          <p class="mt-5 max-w-xl text-lg text-slate-400">through solid engineering and smart design.</p>
+          <div class="mt-8 flex flex-wrap gap-4">
+            <a href="mailto:ltvms.hephaestus.dev@gmail.com"
+               class="rounded-md bg-forge-copper px-6 py-3 font-semibold text-slate-950 transition hover:bg-forge-amber focus:outline-none focus:ring-2 focus:ring-forge-amber">
+              Start a Project
+            </a>
+            <a href="#work"
+               class="rounded-md border border-slate-600 px-6 py-3 font-semibold text-slate-200 transition hover:border-forge-copper hover:text-forge-copper">
+              View Our Work
+            </a>
+          </div>
+        </div>
+
+        <div class="reveal flex justify-center lg:justify-end">
+          <div class="metal-ring forge-glow flex h-56 w-56 items-center justify-center overflow-hidden rounded-full bg-slate-900 sm:h-72 sm:w-72">
+            <img src="assets/logo.png" alt="Hephaestus Dev — tech-infused hammer emblem" class="h-full w-full object-cover"
+                 onerror="this.replaceWith(window.hammerSvg('h-28 w-28 sm:h-36 sm:w-36'))" />
+          </div>
+        </div>
+      </div>
+      <div class="greek-key" role="presentation"></div>
+    </section>
+
+    <!-- ===================== SERVICES ===================== -->
+    <section id="services" class="mx-auto max-w-6xl scroll-mt-24 px-4 py-20 sm:px-6">
+      <div class="reveal mb-12 text-center">
+        <h2 class="text-3xl font-bold uppercase tracking-[0.2em] text-slate-100">What We <span class="text-forge-copper">Do</span></h2>
+        <p class="mt-3 text-slate-400">Engineering disciplines forged into every delivery.</p>
+      </div>
+
+      <div class="grid gap-6 md:grid-cols-3">
+        <article class="forge-card reveal rounded-lg border border-slate-800 bg-forge-surface p-7 transition hover:border-forge-copper/50">
+          <div class="mb-4 flex h-12 w-12 items-center justify-center rounded-md bg-forge-copper/10 text-forge-copper">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M9.75 17L4.5 12l5.25-5m4.5 0L19.5 12l-5.25 5" />
+            </svg>
+          </div>
+          <h3 class="mb-2 text-lg font-bold text-slate-100">Web Development</h3>
+          <p class="text-sm leading-relaxed text-slate-400">Modern, responsive, and user-centric web applications built for speed, accessibility, and real-world usage.</p>
+        </article>
+
+        <article class="forge-card reveal rounded-lg border border-slate-800 bg-forge-surface p-7 transition hover:border-forge-copper/50">
+          <div class="mb-4 flex h-12 w-12 items-center justify-center rounded-md bg-forge-copper/10 text-forge-copper">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M5 12l5 5L20 7M4 19h16" />
+            </svg>
+          </div>
+          <h3 class="mb-2 text-lg font-bold text-slate-100">Software Development</h3>
+          <p class="text-sm leading-relaxed text-slate-400">Robust, tailored software systems — from APIs and microservices to full products — hardened with testing and CI/CD.</p>
+        </article>
+
+        <article class="forge-card reveal rounded-lg border border-slate-800 bg-forge-surface p-7 transition hover:border-forge-copper/50">
+          <div class="mb-4 flex h-12 w-12 items-center justify-center rounded-md bg-forge-copper/10 text-forge-copper">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-6 w-6" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M3.75 21h16.5M4.5 3h15M5.25 3v18m13.5-18v18M9 6.75h1.5m-1.5 3h1.5m-1.5 3h1.5m3-6H15m-1.5 3H15m-1.5 3H15" />
+            </svg>
+          </div>
+          <h3 class="mb-2 text-lg font-bold text-slate-100">Software Architecture</h3>
+          <p class="text-sm leading-relaxed text-slate-400">Planning and structuring scalable, secure systems — cloud-native design, Kubernetes orchestration, and infrastructure as code.</p>
+        </article>
+      </div>
+    </section>
+
+    <div class="greek-key" role="presentation"></div>
+
+    <!-- ===================== TECH STACK ===================== -->
+    <section id="stack" class="mx-auto max-w-6xl scroll-mt-24 px-4 py-20 sm:px-6">
+      <div class="reveal mb-12 text-center">
+        <h2 class="text-3xl font-bold uppercase tracking-[0.2em] text-slate-100">Our Tech <span class="text-forge-copper">Stack</span></h2>
+        <p class="mt-3 text-slate-400">The tools of the forge.</p>
+      </div>
+
+      <div class="reveal grid gap-6 md:grid-cols-3">
+        <div class="rounded-lg border border-slate-800 bg-forge-surface p-6">
+          <h3 class="mb-4 text-xs font-semibold uppercase tracking-[0.25em] text-forge-amber">Frontend</h3>
+          <div class="flex flex-wrap gap-2" data-badges="React,Next.js,TypeScript,Tailwind CSS"></div>
+        </div>
+        <div class="rounded-lg border border-slate-800 bg-forge-surface p-6">
+          <h3 class="mb-4 text-xs font-semibold uppercase tracking-[0.25em] text-forge-amber">Backend</h3>
+          <div class="flex flex-wrap gap-2" data-badges="Node.js,Python,Java,Go"></div>
+        </div>
+        <div class="rounded-lg border border-slate-800 bg-forge-surface p-6">
+          <h3 class="mb-4 text-xs font-semibold uppercase tracking-[0.25em] text-forge-amber">Cloud &amp; Architecture</h3>
+          <div class="flex flex-wrap gap-2" data-badges="AWS,Docker,Kubernetes,Microservices"></div>
+        </div>
+      </div>
+    </section>
+
+    <div class="greek-key" role="presentation"></div>
+
+    <!-- ===================== LIVE WORK ===================== -->
+    <section id="work" class="mx-auto max-w-6xl scroll-mt-24 px-4 py-20 sm:px-6">
+      <div class="reveal mb-12 text-center">
+        <h2 class="text-3xl font-bold uppercase tracking-[0.2em] text-slate-100">Live Repositories <span class="text-forge-copper">&amp;</span> Language Metrics</h2>
+        <p class="mt-3 text-slate-400">Pulled live from our GitHub — what we're forging right now.</p>
+      </div>
+      <div id="repo-grid" class="grid gap-6 sm:grid-cols-2 lg:grid-cols-3" aria-live="polite"></div>
+    </section>
+
+    <div class="greek-key" role="presentation"></div>
+
+    <!-- ===================== ABOUT ===================== -->
+    <section id="about" class="mx-auto max-w-6xl scroll-mt-24 px-4 py-20 sm:px-6">
+      <div class="grid items-center gap-10 lg:grid-cols-5">
+        <div class="reveal lg:col-span-3">
+          <h2 class="text-3xl font-bold uppercase tracking-[0.2em] text-slate-100">About the <span class="text-forge-copper">Founder</span></h2>
+          <p class="mt-6 leading-relaxed text-slate-400">
+            <strong class="text-slate-200">Lucas Santana</strong> is a Senior Software Engineer at WSO2 and Technical Lead at Centro de Inovação EDGE,
+            with 5+ years designing and shipping scalable systems. He works across the full stack — Java (8 through 21), TypeScript,
+            microservices with Spring, Quarkus, and Node.js, and front-ends in React, Angular, and Vue — with production experience
+            running Kubernetes clusters, Docker pipelines, and CI/CD automation with Jenkins and GitHub Actions.
+          </p>
+          <p class="mt-4 leading-relaxed text-slate-400">
+            B.Sc. in Computer Science from Universidade Federal de Alagoas. Every Hephaestus Dev project carries the same standard:
+            near-100% test coverage, zero-downtime deployments, and architecture built to last.
+          </p>
+          <a href="https://www.linkedin.com/in/lucas-tvms" target="_blank" rel="noopener"
+             class="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-forge-copper transition hover:text-forge-amber">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M19 0h-14c-2.76 0-5 2.24-5 5v14c0 2.76 2.24 5 5 5h14c2.76 0 5-2.24 5-5v-14c0-2.76-2.24-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.27c-.97 0-1.75-.79-1.75-1.76s.78-1.75 1.75-1.75 1.75.78 1.75 1.75-.78 1.76-1.75 1.76zm13.5 12.27h-3v-5.6c0-3.37-4-3.11-4 0v5.6h-3v-11h3v1.77c1.4-2.59 7-2.78 7 2.48v6.75z"/>
+            </svg>
+            Connect on LinkedIn
+          </a>
+        </div>
+
+        <div class="reveal grid grid-cols-2 gap-4 lg:col-span-2">
+          <div class="rounded-lg border border-slate-800 bg-forge-surface p-5 text-center">
+            <p class="text-2xl font-extrabold text-forge-copper">5+</p>
+            <p class="mt-1 text-xs uppercase tracking-widest text-slate-400">Years Engineering</p>
+          </div>
+          <div class="rounded-lg border border-slate-800 bg-forge-surface p-5 text-center">
+            <p class="text-2xl font-extrabold text-forge-copper">Java 8→21</p>
+            <p class="mt-1 text-xs uppercase tracking-widest text-slate-400">&amp; TypeScript</p>
+          </div>
+          <div class="rounded-lg border border-slate-800 bg-forge-surface p-5 text-center">
+            <p class="text-2xl font-extrabold text-forge-copper">K8s</p>
+            <p class="mt-1 text-xs uppercase tracking-widest text-slate-400">In Production</p>
+          </div>
+          <div class="rounded-lg border border-slate-800 bg-forge-surface p-5 text-center">
+            <p class="text-2xl font-extrabold text-forge-copper">~100%</p>
+            <p class="mt-1 text-xs uppercase tracking-widest text-slate-400">Test Coverage Goal</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="greek-key" role="presentation"></div>
+
+    <!-- ===================== CONTACT ===================== -->
+    <section id="contact" class="mx-auto max-w-3xl scroll-mt-24 px-4 py-20 text-center sm:px-6">
+      <div class="reveal">
+        <h2 class="text-3xl font-bold uppercase tracking-[0.2em] text-slate-100">Get in <span class="text-forge-copper">Touch</span></h2>
+        <p class="mt-4 text-slate-400">Have a complex idea? Let's forge it into software.</p>
+
+        <div class="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
+          <a href="mailto:ltvms.hephaestus.dev@gmail.com"
+             class="inline-flex items-center gap-2 rounded-md bg-forge-copper px-6 py-3 font-semibold text-slate-950 transition hover:bg-forge-amber focus:outline-none focus:ring-2 focus:ring-forge-amber">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M21.75 6.75v10.5a2.25 2.25 0 01-2.25 2.25h-15a2.25 2.25 0 01-2.25-2.25V6.75m19.5 0A2.25 2.25 0 0019.5 4.5h-15a2.25 2.25 0 00-2.25 2.25m19.5 0v.243a2.25 2.25 0 01-1.07 1.916l-7.5 4.615a2.25 2.25 0 01-2.36 0L3.32 8.91a2.25 2.25 0 01-1.07-1.916V6.75" />
+            </svg>
+            ltvms.hephaestus.dev@gmail.com
+          </a>
+          <button id="copy-email" aria-label="Copy email address"
+                  class="rounded-md border border-slate-600 p-3 text-slate-300 transition hover:border-forge-copper hover:text-forge-copper focus:outline-none focus:ring-2 focus:ring-forge-amber">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="1.8" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
+            </svg>
+          </button>
+        </div>
+        <p id="copy-feedback" class="mt-3 h-5 text-sm text-forge-amber" aria-live="polite"></p>
+
+        <div class="mt-8 flex justify-center gap-6 text-sm">
+          <a href="https://github.com/ltvms-hephaestus-dev" target="_blank" rel="noopener" class="inline-flex items-center gap-2 text-slate-400 transition hover:text-forge-copper">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M12 .5C5.65.5.5 5.65.5 12c0 5.08 3.29 9.39 7.86 10.91.58.11.79-.25.79-.56 0-.27-.01-1.17-.02-2.12-3.2.7-3.88-1.36-3.88-1.36-.52-1.33-1.28-1.68-1.28-1.68-1.04-.71.08-.7.08-.7 1.15.08 1.76 1.19 1.76 1.19 1.03 1.76 2.69 1.25 3.35.96.1-.75.4-1.25.72-1.54-2.55-.29-5.24-1.28-5.24-5.69 0-1.26.45-2.29 1.19-3.09-.12-.29-.52-1.46.11-3.05 0 0 .97-.31 3.18 1.18a11.05 11.05 0 015.8 0c2.2-1.49 3.17-1.18 3.17-1.18.63 1.59.23 2.76.12 3.05.74.8 1.18 1.83 1.18 3.09 0 4.43-2.69 5.4-5.26 5.68.41.36.78 1.06.78 2.14 0 1.55-.02 2.8-.02 3.18 0 .31.21.68.8.56A10.53 10.53 0 0023.5 12C23.5 5.65 18.35.5 12 .5z"/>
+            </svg>
+            GitHub
+          </a>
+          <a href="https://www.linkedin.com/in/lucas-tvms" target="_blank" rel="noopener" class="inline-flex items-center gap-2 text-slate-400 transition hover:text-forge-copper">
+            <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path d="M19 0h-14c-2.76 0-5 2.24-5 5v14c0 2.76 2.24 5 5 5h14c2.76 0 5-2.24 5-5v-14c0-2.76-2.24-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.27c-.97 0-1.75-.79-1.75-1.76s.78-1.75 1.75-1.75 1.75.78 1.75 1.75-.78 1.76-1.75 1.76zm13.5 12.27h-3v-5.6c0-3.37-4-3.11-4 0v5.6h-3v-11h3v1.77c1.4-2.59 7-2.78 7 2.48v6.75z"/>
+            </svg>
+            LinkedIn
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <!-- ===================== FOOTER ===================== -->
+  <footer class="border-t border-slate-800">
+    <div class="greek-key" role="presentation"></div>
+    <div class="mx-auto flex max-w-6xl flex-col items-center gap-2 px-4 py-8 text-center text-sm text-slate-500 sm:px-6">
+      <p class="font-semibold uppercase tracking-[0.25em] text-slate-300">Hephaestus <span class="text-forge-copper">Dev</span> <span class="text-slate-500">(LTVMS)</span></p>
+      <p>© <span id="year"></span> Hephaestus Dev — Forged with solid engineering and smart design.</p>
+    </div>
+  </footer>
+
+  <script src="app.js"></script>
+</body>
+</html>
